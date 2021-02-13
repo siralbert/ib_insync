@@ -168,6 +168,25 @@ class Wrapper:
         self.ticker2ReqId[tickType][ticker] = reqId
         return ticker
 
+# ADD startTicker method for TD_Client
+
+    def startTicker_TD(
+            self, reqId: int, contract: Contract, tickType: Union[int, str]):
+        """
+        Start a tick request that has the reqId associated with the contract.
+        Return the ticker.
+        """
+        ticker = self.tickers.get(id(contract))
+        if not ticker:
+            ticker = Ticker(
+                contract=contract, ticks=[], tickByTicks=[],
+                domBids=[], domAsks=[], domTicks=[])
+            self.tickers[id(contract)] = ticker
+        self.reqId2Ticker[reqId] = ticker
+        self._reqId2Contract[reqId] = contract
+        self.ticker2ReqId[tickType][ticker] = reqId
+        return ticker
+
     def endTicker(self, ticker: Ticker, tickType: Union[int, str]):
         reqId = self.ticker2ReqId[tickType].pop(ticker, 0)
         self._reqId2Contract.pop(reqId, None)
