@@ -255,8 +255,6 @@ class IB:
         # connect to TD API
         refreshtoken = open(os.path.expanduser('~/.r_token'), 'r')
         td_client = td.TDClient(client_id=os.getenv('TDAMERITRADE_CLIENT_ID'), refresh_token=refreshtoken)
-        print(td_client.search('AAPL'))
-            # test connection
         """
         Connect to a running TWS or IB gateway application.
         After the connection is made the client is fully synchronized
